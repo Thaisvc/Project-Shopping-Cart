@@ -5,7 +5,6 @@ const fetchItem = async (itemId) => {
     const data = await response.json();
     const results = await data;
     return results;
-    /* console.log('aki', results); */
   } catch (error) {
     return error;
   }
