@@ -12,7 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-// Requisito 5 - remove o item do carrinho ao clicar nele.
+// remove item do carrinho 
 const cartItemClickListener = (event) => {
   event.target.remove();
 };
@@ -24,9 +24,8 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
-// Requisito 4 - Adiciona os itens ao carrinho e adiciona o elemento retornado da função createCartItemElement() como filho do elemento cart_items.
-const addItemsToCart = async (itemId) => {
+// adiciona itens ao carrinho
+const addItemCar = async (itemId) => {
   const cartItems = document.querySelector('.cart__items');
   const getFetchItem = await fetchItem(itemId);
   const product = {
@@ -36,7 +35,6 @@ const addItemsToCart = async (itemId) => {
   };
   cartItems.appendChild(createCartItemElement(product));
 };
-addItemsToCart();
 
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
@@ -45,13 +43,13 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-// Requisito 4 - Adiciona o escutador de click na função addItemToCart. Quando o botão Adicionar ao carrinho for clicado a função será executada.
+// escutador de evento q add item ao carrinho
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.addEventListener('click', () => addItemsToCart(sku));
+  button.addEventListener('click', () => addItemCar(sku));
   section.appendChild(button);
   return section;
 };
-// Requisito 2
+
 const createListProducts = async () => {
   const itemsSection = document.querySelector('.items');
   const productComputer = await fetchProducts('computador');
