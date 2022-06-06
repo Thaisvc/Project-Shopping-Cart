@@ -12,45 +12,61 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+// Requisito 5 - remove o item do carrinho ao clicar nele.
+const cartItemClickListener = (event) => {
+  event.target.remove();
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
+// Requisito 4 - Adiciona os itens ao carrinho e adiciona o elemento retornado da função createCartItemElement() como filho do elemento cart_items.
+const addItemsToCart = async (itemId) => {
+  const cartItems = document.querySelector('.cart__items');
+  const getFetchItem = await fetchItem(itemId);
+  const product = {
+    sku: getFetchItem.id,
+    name: getFetchItem.title,
+    salePrice: getFetchItem.price,
+  };
+  cartItems.appendChild(createCartItemElement(product));
+};
+addItemsToCart();
+
 const createProductItemElement = ({ sku, name, image }) => {
-  const classItem = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  classItem.appendChild(section);
+// Requisito 4 - Adiciona o escutador de click na função addItemToCart. Quando o botão Adicionar ao carrinho for clicado a função será executada.
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', () => addItemsToCart(sku));
+  section.appendChild(button);
+  return section;
 };
+// Requisito 2
+const createListProducts = async () => {
+  const itemsSection = document.querySelector('.items');
+  const productComputer = await fetchProducts('computador');
+  productComputer.results.forEach((computer) => {
+    const { id, title, thumbnail } = computer;
+    const product = {
+      sku: id,
+      name: title,
+      image: thumbnail,
+    };
+    itemsSection.appendChild(createProductItemElement(product));
+  });
+};
+createListProducts();
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const ol = document.querySelector('.cart__items');
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  ol.appendChild(li);
-};
-
-window.onload = async () => {
-  const apiProduto = await fetchProducts();
-  const sk = apiProduto.results.map((id) => id.id);
-  const nam = apiProduto.results.map((nome) => nome.title);
-  const imag = apiProduto.results.map((img) => img.thumbnail);
-  const result = { sk, nam, imag };
-  /* console.log(result); */
-  for (let index = 0; index < result.sk.length; index += 1) {
-    const sku = result.sk[index];
-    const name = result.nam[index];
-    const image = result.imag[index];
-    const obj = { sku, name, image };
-    createProductItemElement(obj);
-  }
-};
+window.onload = () => {};
