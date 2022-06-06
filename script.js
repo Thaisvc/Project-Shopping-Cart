@@ -13,7 +13,7 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
-  const acesso = document.querySelector('.items');
+  const classItem = document.querySelector('.items');
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -21,17 +21,30 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  classItem.appendChild(section);
+};
 
-  acesso.appendChild(section);
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+const cartItemClickListener = (event) => {
+  // coloque seu código aqui
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
 };
 
 window.onload = async () => {
-  const func = await fetchProducts();
-  const sk = func.results.map((id) => id.id);
-  const nam = func.results.map((nome) => nome.title);
-  const imag = func.results.map((img) => img.thumbnail);
+  const apiProduto = await fetchProducts();
+  const sk = apiProduto.results.map((id) => id.id);
+  const nam = apiProduto.results.map((nome) => nome.title);
+  const imag = apiProduto.results.map((img) => img.thumbnail);
   const result = { sk, nam, imag };
-  console.log(result);
+  /* console.log(result); */
   for (let index = 0; index < result.sk.length; index += 1) {
     const sku = result.sk[index];
     const name = result.nam[index];
