@@ -31,11 +31,12 @@ const cartItemClickListener = (event) => {
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
+  const ol = document.querySelector('.cart__items');
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  return li;
+  ol.appendChild(li);
 };
 
 window.onload = async () => {

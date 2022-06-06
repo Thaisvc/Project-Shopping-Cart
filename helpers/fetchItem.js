@@ -1,10 +1,11 @@
-const endpoint = 'https://api.mercadolibre.com/items/';
-
-const fetchItem = async (call) => {
+const fetchItem = async (itemId) => {
+  if (itemId === undefined) return new Error('You must provide an url'); 
   try {
-    const response = await fetch(`${endpoint}${call}`).then((resposta) => resposta.json());
-   
-    return response;
+    const response = await fetch(`https://api.mercadolibre.com/items/${itemId}`);
+    const data = await response.json();
+    const results = await data;
+    return results;
+    /* console.log('aki', results); */
   } catch (error) {
     return error;
   }
