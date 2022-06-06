@@ -1,3 +1,6 @@
+/* eslint-disable */
+const { fetchProducts } = require('./helpers/fetchProducts');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -38,4 +41,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-window.onload = () => { };
+const getProducts = async (param) => {
+  const search = await fetchProducts(param);
+  const section = document.querySelector('.items');
+  search.results.forEach((result) => {
+    const obj = { sku: result.id, name: result.title, image: result.thumbnail };
+    const item = createProductItemElement(obj);
+    section.appendChild(item);
+  });
+};
+
+window.onload = () => {
+  getProducts('computador');
+};
