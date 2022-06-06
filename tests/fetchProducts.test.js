@@ -8,7 +8,7 @@ describe('1 - Teste a função fetchProducts', () => {
   })
 
   test('Execute a função fetchProducts com o argumento /computador/ e teste se fetch foi chamada', async () => {
-    // expect.assertions(1);    
+       
     fetchProducts('computador');
     expect(fetch).toHaveBeenCalled();
   })

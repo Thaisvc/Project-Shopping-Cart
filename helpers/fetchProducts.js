@@ -1,9 +1,10 @@
-const fetchProducts = async (product) => {
+const fetchProducts = async (computador) => {
   try {
-    const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-
-    const response = await fetch(endpoint).then((resposta) => resposta.json());
-    return response;
+  const endpoint = 'https://api.mercadolibre.com/sites/MLB/search?q=';
+  const response = await fetch(`${endpoint}${computador}`);
+  const products = await response.json();
+ 
+  return products;
   } catch (error) {
     return error;
   }
@@ -15,5 +16,3 @@ if (typeof module !== 'undefined') {
     fetchProducts,
   };
 }
-
-console.log(fetchProducts('computador'));
