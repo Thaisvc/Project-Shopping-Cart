@@ -12,23 +12,25 @@ const createCustomElement = (element, className, innerText) => {
   e.innerText = innerText;
   return e;
 };
+
 // cria os itens com botao para adicionar no carrinho id,titulo e imagem
 const createProductItemElement = ({ sku, name, image }) => {
-   const section = document.createElement('section');
+  const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
 };
+
 // selecionando e exibindo o item
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
-// criando elementos li com id titulo e preço e chando funçao q add esses elementos dentro do carrinho
+
+// cria li com id titulo e preço para colocar dentro do carrinho
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -37,6 +39,26 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+// essa funçao exibe a lista de produtos
+const criarListaProduto = async () => {
+  // selecionando elemento pai
+const pegarSection = document.querySelector('.items');
+// buscando na api
+const chamandoAPI = await fetchProducts('computador');
+// pegando a api pegando o objeto array results e percorrendo ele
+chamandoAPI.results.forEach((computer) => {
+  // desconstruindo o arry e pegando o  q preciso
+  const { id, title, thumbnail } = computer;
+  // construindo meu objeto
+  const product = {
+    sku: id,
+    name: title,
+    image: thumbnail,
+  };
+  // chando funçao q cria elementos, passando meus produtos como filho da section
+  pegarSection.appendChild(createProductItemElement(product));
+});
+};
+criarListaProduto();
 
-
-window.onload = () => { };
+window.onload = () => {};
