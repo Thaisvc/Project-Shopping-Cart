@@ -16,6 +16,7 @@ const createCustomElement = (element, className, innerText) => {
 // remove item q foi clicado do carrinho/parametro evento de click
 const cartItemClickListener = (event) => {
   event.target.remove();
+  const ol = document.querySelector('.cart__items');
   saveCartItems(ol.innerHTML);
 };
 // cria os elementos no carrinho
@@ -91,7 +92,10 @@ const createProductlist = async () => {
 };
 
 createProductlist();
-
+const limparLi = () => {
+  document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
+};
 window.onload = () => {
   document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+  limparLi();
 };
