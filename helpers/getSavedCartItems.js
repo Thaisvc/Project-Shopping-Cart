@@ -1,8 +1,8 @@
 const getSavedCartItems = () => {
-  const getList = localStorage.getItem('cartItems');
-  const test = JSON.parse(getList);
-  const { sku } = test;
-  return sku;
+  const getLocal = localStorage.getItem('cartItems');
+  
+  /* const getList = JSON.parse(getLocal); */
+  return getLocal;
 };
 
 if (typeof module !== 'undefined') {

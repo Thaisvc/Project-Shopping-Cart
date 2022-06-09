@@ -16,6 +16,7 @@ const createCustomElement = (element, className, innerText) => {
 // remove item q foi clicado do carrinho/parametro evento de click
 const cartItemClickListener = (event) => {
   event.target.remove();
+  saveCartItems(ol.innerHTML);
 };
 // cria os elementos no carrinho
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -27,7 +28,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   const ol = document.querySelector('.cart__items');
   // add elementos criados (li) ao pai(ol)
     ol.appendChild(li);
-    saveCartItems(ol.innerText);
+    saveCartItems(ol.innerHTML);
       return li;
  };
 
@@ -90,7 +91,7 @@ const createProductlist = async () => {
 };
 
 createProductlist();
-
+  
 window.onload = () => {
-  addCarrinho(getSavedCartItems()); 
+  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
 };
