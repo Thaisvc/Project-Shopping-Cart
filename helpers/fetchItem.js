@@ -1,16 +1,13 @@
-const endpoint = 'https://api.mercadolibre.com/items/';
-
-const fetchItem = async (call) => {
-  try {
-    const response = await fetch(`${endpoint}${call}`).then((resposta) => resposta.json());
-   
-    return response;
-  } catch (error) {
-    return error;
-  }
+const fetchItem = async (ItemID) => {
+ try {
+  const endpoint = `https://api.mercadolibre.com/items/${ItemID}`;
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  return data;
+ } catch (error) {
+   return error;
+ }
 };
-
-fetchItem();
 
 if (typeof module !== 'undefined') {
   module.exports = {
