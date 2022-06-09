@@ -20,17 +20,17 @@ const cartItemClickListener = (event) => {
 };
 // cria os elementos no carrinho
 const createCartItemElement = ({ sku, name, salePrice }) => {
-    const li = document.createElement('li');
+  const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerHTML = `SKU: ${sku} |   NAME: ${name} |    PRICE: $${salePrice}`;
-    li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   // pegando elemento q sera pai dos q criarei
   const ol = document.querySelector('.cart__items');
   // add elementos criados (li) ao pai(ol)
-    ol.appendChild(li);
-    saveCartItems(ol.innerHTML);
-      return li;
- };
+  ol.appendChild(li);
+  saveCartItems(ol.innerHTML);
+  return li;
+};
 
 // adicionar produto o carrinho
 const addCarrinho = async (idProduct) => {
@@ -45,12 +45,12 @@ const addCarrinho = async (idProduct) => {
     salePrice: price,
   };
   // retorno chama createCartItemElement q cria as linha dentro do carrinho com os dados passados como parametro
-  
-    return createCartItemElement(obj);
+
+  return createCartItemElement(obj);
 };
 
 const createProductItemElement = ({ sku, name, image }) => { // recebe dados da funçao createProductlist
-    const section = document.createElement('section');
+  const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));// cria um span filho com id
   section.appendChild(createCustomElement('span', 'item__title', name));// cria um span filho com titulo
@@ -60,7 +60,7 @@ const createProductItemElement = ({ sku, name, image }) => { // recebe dados da 
   button.addEventListener('click', () => addCarrinho(sku));// passando o id 
   // add botao ao produto
   section.appendChild(button);
-   
+
   return section;
 };
 
@@ -91,7 +91,7 @@ const createProductlist = async () => {
 };
 
 createProductlist();
-  
+
 window.onload = () => {
   document.querySelector('.cart__items').innerHTML = getSavedCartItems();
 };
