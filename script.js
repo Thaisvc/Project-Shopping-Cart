@@ -1,3 +1,4 @@
+const ol = document.querySelector('.cart__items');
 // criando imagem do item
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -16,7 +17,6 @@ const createCustomElement = (element, className, innerText) => {
 // remove item q foi clicado do carrinho/parametro evento de click
 const cartItemClickListener = (event) => {
   event.target.remove();
-  const ol = document.querySelector('.cart__items');
   saveCartItems(ol.innerHTML);
 };
 // cria os elementos no carrinho
@@ -26,7 +26,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerHTML = `SKU: ${sku} |   NAME: ${name} |    PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   // pegando elemento q sera pai dos q criarei
-  const ol = document.querySelector('.cart__items');
   // add elementos criados (li) ao pai(ol)
   ol.appendChild(li);
   saveCartItems(ol.innerHTML);
@@ -93,9 +92,9 @@ const createProductlist = async () => {
 
 createProductlist();
 const limparLi = () => {
-  document.querySelector('.cart__items').addEventListener('click', cartItemClickListener);
+  ol.addEventListener('click', cartItemClickListener);
 };
 window.onload = () => {
-  document.querySelector('.cart__items').innerHTML = getSavedCartItems();
+  ol.innerHTML = getSavedCartItems();
   limparLi();
 };
