@@ -27,7 +27,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   const ol = document.querySelector('.cart__items');
   // add elementos criados (li) ao pai(ol)
     ol.appendChild(li);
-    
+    saveCartItems(ol.innerText);
       return li;
  };
 
@@ -60,10 +60,6 @@ const createProductItemElement = ({ sku, name, image }) => { // recebe dados da 
   // add botao ao produto
   section.appendChild(button);
    
-  button.addEventListener('click', () => {
-    addToCart(sku);
-  });
-  section.appendChild(button);
   return section;
 };
 
@@ -96,5 +92,5 @@ const createProductlist = async () => {
 createProductlist();
 
 window.onload = () => {
-  addCarrinho(getSavedCartItems());
+  addCarrinho(getSavedCartItems()); 
 };
