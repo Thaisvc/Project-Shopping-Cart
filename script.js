@@ -23,7 +23,7 @@ const cartItemClickListener = (event) => {
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerHTML = `SKU: ${sku} |   NAME: ${name} |    PRICE: $${salePrice}`;
+  li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   // pegando elemento q sera pai dos q criarei
   // add elementos criados (li) ao pai(ol)
