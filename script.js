@@ -19,16 +19,28 @@ const cartItemClickListener = (event) => {
   event.target.remove();
   saveCartItems(ol.innerHTML);
 };
+
+// exibe o valor dos produtos no carrinho
+let sumItemCar = 0;
+const div = document.querySelector('.total-price');
+div.innerText = sumItemCar;
+
 // cria os elementos no carrinho
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  // pegando elemento q sera pai dos q criarei
-  // add elementos criados (li) ao pai(ol)
-  ol.appendChild(li);
+  ol.appendChild(li); // pegando elemento q sera pai dos q criarei  // add elementos criados (li) ao pai(ol)
   saveCartItems(ol.innerHTML);
+ 
+  sumItemCar += salePrice; // soma o preco dos itens no carrinho
+  div.innerText = Math.round(sumItemCar * 100) / 100; // pega o preco dentro da div
+  li.addEventListener('click', (event) => { // add evento de click para os itens clicados e subtraindo o preço do total
+    event.target.remove(); // remove item
+    sumItemCar -= salePrice; // subtrai
+    div.innerText = Math.round(sumItemCar * 100) / 100;// recalcula
+  });
   return li;
 };
 
