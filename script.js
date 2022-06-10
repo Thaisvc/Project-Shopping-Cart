@@ -72,12 +72,11 @@ const createProductItemElement = ({ sku, name, image }) => { // recebe dados da 
   button.addEventListener('click', () => addCarrinho(sku));// passando o id 
   // add botao ao produto
   section.appendChild(button);
-
   return section;
 };
 
 // seleciona o id de um item
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+// const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 // _____________________________________________________
 // criar a lista de produto
@@ -102,11 +101,21 @@ const createProductlist = async () => {
   });
 };
 
-createProductlist();
 const limparLi = () => {
   ol.addEventListener('click', cartItemClickListener);
 };
+// esvazia o carrinho
+const btnCatClean = () => {
+const btnClean = document.querySelector('.empty-cart'); // pega o botao
+btnClean.addEventListener('click', () => { // add evento de click e chama a callbak
+  ol.innerHTML = ''; // pega minha ol onde esta os itens e substitui por nada
+  div.innerHTML = 0; // pega meu valor no carrinho e muda para 0 ja q nao tem mais itens
+});
+};
+
 window.onload = () => {
   ol.innerHTML = getSavedCartItems();
+  createProductlist();
   limparLi();
+  btnCatClean();
 };
